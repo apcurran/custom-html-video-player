@@ -1,5 +1,7 @@
 # Custom Video Player
 
+[View Live Site](https://apcurran.github.io/custom-html-video-player/)
+
 ## Features:
 
 - Vanilla JS logic for controls

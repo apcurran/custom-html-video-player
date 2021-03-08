@@ -34,7 +34,14 @@ function handleRangeUpdate(event) {
 function handleProgress() {
     const percent = (video.currentTime / video.duration) * 100;
 
+    // TODO: Houdini CSS Typed OM
     progressBar.style.flexBasis = `${percent}%`;
+}
+
+function scrubTimeline(event) {
+    const scrubTime = (event.offsetX / progress.offsetWidth) * video.duration;
+
+    video.currentTime = scrubTime;
 }
 
 // Event listeners
@@ -46,3 +53,13 @@ video.addEventListener("timeupdate", handleProgress);
 toggle.addEventListener("click", togglePlay);
 skipBtns.forEach(btn => btn.addEventListener("click", skip));
 ranges.forEach(range => range.addEventListener("change", handleRangeUpdate));
+
+let mouseDown = false;
+progress.addEventListener("click", scrubTimeline);
+progress.addEventListener("mousemove", (event) => {
+    if (mouseDown) {
+        scrubTimeline(event);
+    };
+});
+progress.addEventListener("mousedown", () => mouseDown = true);
+progress.addEventListener("mouseup", () => mouseDown = false);

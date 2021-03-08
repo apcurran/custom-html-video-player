@@ -27,13 +27,21 @@ function skip(event) {
 }
 
 function handleRangeUpdate(event) {
-    console.log(event.target.value);
+    // Adjust volume or playback speed
+    video[event.target.name] = event.target.value;
+}
+
+function handleProgress() {
+    const percent = (video.currentTime / video.duration) * 100;
+
+    progressBar.style.flexBasis = `${percent}%`;
 }
 
 // Event listeners
 video.addEventListener("click", togglePlay);
 video.addEventListener("play", updateBtn);
 video.addEventListener("pause", updateBtn);
+video.addEventListener("timeupdate", handleProgress);
 
 toggle.addEventListener("click", togglePlay);
 skipBtns.forEach(btn => btn.addEventListener("click", skip));

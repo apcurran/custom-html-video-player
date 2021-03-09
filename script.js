@@ -34,8 +34,13 @@ function handleRangeUpdate(event) {
 function handleProgress() {
     const percent = (video.currentTime / video.duration) * 100;
 
-    // TODO: Houdini CSS Typed OM
-    progressBar.style.flexBasis = `${percent}%`;
+    if (window.CSS && CSS.number) {
+        // Supports CSS Typed OM
+        progressBar.attributeStyleMap.set("flex-basis", CSS.percent(percent));
+    } else {
+        progressBar.style.flexBasis = `${percent}%`;
+    }
+
 }
 
 function scrubTimeline(event) {
